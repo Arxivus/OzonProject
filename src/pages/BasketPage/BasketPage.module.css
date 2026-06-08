@@ -1,0 +1,13 @@
+.mainContainer {
+    display: flex;
+    gap: 64px;
+    flex-wrap: wrap;
+    padding: 52px;
+    background-color: var(--bg-secondary);
+}
+
+.orderProducts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-big);
+}

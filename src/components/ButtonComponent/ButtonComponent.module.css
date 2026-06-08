@@ -1,0 +1,48 @@
+.wrapper {
+    cursor: pointer;
+    min-width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-small);
+    border: 1px solid var(--bg-primary);
+    border-radius: var(--br-radius-secondary);
+    color: var(--bg-primary);
+    background-color: var(--bg-accent-lite);
+    transition: all 0.4s ease;
+}
+
+.wrapper svg path {
+    stroke: var(--fc-primary);
+}
+
+.wrapper:not(:disabled):active {
+    color: var(--fc-primary);
+    background-color: var(--bg-button);
+    border: 1px solid var(--fc-primary);
+}
+
+.wrapper:not(:disabled):active .textContent {
+    color: var(--fc-primary);
+}
+
+.wrapper:not(:disabled):active svg path {
+    stroke: var(--fc-primary);
+}
+
+.wrapper:disabled {
+    background-color: var(--bg-btn-disabled);
+}
+
+.wrapper:disabled .textContent {
+    color: var(--fc-btn-disabled);
+}
+
+.wrapper:disabled svg path {
+    stroke: var(--fc-btn-disabled);
+}
+
+.textContent {
+    text-wrap: nowrap;
+    font-weight: 500;
+}

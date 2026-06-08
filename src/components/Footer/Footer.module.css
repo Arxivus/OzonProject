@@ -1,0 +1,7 @@
+.footer {
+    background-color: var(--bg-accent);
+}
+
+.footerBlock {
+    padding: 25px 0;
+}

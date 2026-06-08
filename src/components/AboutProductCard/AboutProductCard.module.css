@@ -1,0 +1,95 @@
+.productCard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-big);
+}
+
+.product {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.product img {
+    display: flex;
+    width: 100%;
+    max-width: 450px;
+    max-height: 400px;
+    border-radius: var(--br-radius-primary);
+}
+
+.productInfo {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-big);
+}
+
+.productInfo p,
+.productInfo span {
+    text-align: center;
+    font-weight: 700;
+    font-size: var(--fs-big);
+}
+
+.productInfo p {
+    color: var(--bg-accent-lite);
+}
+
+.basketBtn {
+    width: 100%;
+    font-size: var(--fs-medium);
+    padding: 10px 32px;
+}
+
+.basketBtn p {
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--bg-primary);
+}
+
+.basketBtn svg {
+    min-width: 25px;
+    min-height: 25px;
+}
+
+.basketBtn svg path {
+    stroke: var(--bg-primary);
+}
+
+.productTextInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-medium);
+}
+
+.productInfoField {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-small);
+}
+
+.productInfoField span {
+    font-weight: 700;
+    font-size: var(--fs-medium);
+}
+
+.productInfoField p {
+    font-size: 18px;
+    line-height: 1.25;
+}
+
+.splited {
+    align-items: start;
+    flex-direction: column;
+}
+
+.splited p {
+    text-indent: 30px;
+}

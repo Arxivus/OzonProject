@@ -1,0 +1,60 @@
+:root {
+  --fc-primary: #000000;
+  --fc-secondary: #9A9A9A;
+  --fc-accent: #3A7CFF;
+
+  --fc-btn-disabled: lightgray;
+  --bg-btn-disabled: gray;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #E9EEFF;
+  --bg-accent: #486AFF;
+  --bg-accent-lite: #4B9FFF;
+
+  --shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+  --gap-big: 32px;
+  --gap-medium: 16px;
+  --gap-small: 8px;
+
+  --br-radius-primary: 16px; 
+  --br-radius-secondary: 8px;
+  
+  --fs-big: 32px;
+  --fs-medium: 20px;
+  --fs-regular: 16px;
+  --fs-small: 14px
+
+}
+
+p, h1, h2, h3, h4 {
+  margin: 0;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 52px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+main {
+  min-height: 100vh;
+}

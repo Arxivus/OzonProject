@@ -1,0 +1,107 @@
+.orderCard {
+    box-sizing: border-box;
+    max-width: 100%;
+    width: 450px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--gap-big);
+    padding: 20px;
+    border-radius: var(--br-radius-primary);
+    background-color: var(--bg-primary);
+    box-shadow: var(--shadow);
+}
+
+.orderCard img {
+    width: 100%;
+    max-width: 200px;
+    border: 1px solid var(--bg-accent-lite);
+    border-radius: var(--br-radius-primary);
+}
+
+.orderInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-big);
+}
+
+.orderInfoBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-small);
+}
+
+.orderInfoBlock span {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.orderInfoBlock p {
+    font-weight: 700;
+    font-size: var(--fs-medium);
+    color: var(--fc-accent);
+}
+
+.deleteBtn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px 0;
+    background-color: var(--fc-secondary);
+}
+
+.deleteBtn p {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--bg-primary);
+}
+
+.deleteBtn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.deleteBtn svg path {
+    stroke: var(--bg-primary);
+}
+
+.productCounter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-small);
+}
+
+.counterBtns {
+    display: flex;
+    gap: var(--br-radius-secondary);
+    font-weight: 700;
+}
+
+.productCounter span {
+    color: var(--fc-secondary);
+    font-size: var(--fs-regular);
+}
+
+.counterBtns button {
+    box-sizing: border-box;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 4px;
+    color: var(--bg-primary);
+    background-color: var(--fc-secondary);
+    font-weight: 700;
+    font-size: var(--fs-regular);
+}
+
+.counterBtns div {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 2px 20px;
+    border: 1px solid var(--bg-accent-lite);
+    border-radius: 4px;
+    background-color: var(--bg-primary);
+}
+

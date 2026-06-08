@@ -1,0 +1,39 @@
+.header {
+    background-color: var(--bg-accent);
+}
+
+.headerBlock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--gap-big);
+    padding: 25px 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-medium);
+    color: var(--bg-primary);
+}
+
+.navItems {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-big);
+}
+
+.navItem {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--gap-small);
+    padding-left: 8px;
+    color: var(--bg-primary);
+}
+
+.navItem svg {
+    max-width: 30px;
+    max-height: 30px;
+}

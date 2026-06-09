@@ -3,11 +3,44 @@
     flex-direction: column;
     gap: 64px;
     padding: 52px;
-    background-color: var(--bg-secondary);
 }
 
 .productsList {
     display: flex;
     flex-wrap: wrap;
     gap: var(--gap-big);
+}
+
+.filters {
+    display: flex;
+    justify-content: end;
+    gap: var(--gap-big);
+}
+
+.selectFilter {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-small);
+}
+
+.inputFilter {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-small);
+}
+
+.inputFilter label,
+.selectFilter {
+    font-size: var(--fs-medium);
+    color: var(--fc-secondary);
+}
+
+.inputFilter input {
+    max-width: 100px;
+    padding: 10px 16px;
+    border: none;
+    outline: none;
+    border-radius: var(--br-radius-secondary);
+    font-size: 18px;
+    box-shadow: var(--shadow);
 }

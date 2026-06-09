@@ -1,9 +1,14 @@
 import styles from './MainPage.module.css'
+import selectStyles from '../../customStyles/select-styles'
 import Layout from '../Layout'
 import ProductCard from '../../components/ProductCard/ProductCard'
-import { useState, useMemo } from 'react'
+import SearchComponent from '../../components/SearchComponent/SearchComponent'
+import { useState, useMemo, useEffect } from 'react'
 import { ModalWindow } from '../../components/ModalWindow/ModalWindow'
+import Select from 'react-select';
+import SingleValue from 'react-select';
 import AboutProductCard from '../../components/AboutProductCard/AboutProductCard'
+import { productsdata, productCategories } from '../../testData'
 
 const MainPage = () => {
 
@@ -11,32 +16,44 @@ const MainPage = () => {
     const [modalVisible, setModalVisible] = useState(false)
     const [filters, setFilters] = useState({ name: '', category: '', price: [] });
 
-    const [products, setProducts] = useState([
-        { name: 'Unmatched: Битва Легенд. Том 3', price: '4400', category: 'Настольные и карточные игры', description: '' },
-        { name: 'Велосипед Stels Navigator 480', price: '18000', category: 'Спорт и отдых', description: 'Горные велосипеды предназначены для покорения бездорожья и перемещения по грязи, снегу и гравию. Эти байки делают очень крепкими, у них толстые шины и прочные колеса, устойчивые к повреждениям от ударов. Рамы для горных велов производят из алюминия, стали, титана и карбона, их ресурс прочности рассчитан на большие нагрузки. Система амортизации на таких байках позволяет колесам поглощать вибрации и удары на неровной дороге. Существуют горные велосипеды с передней подвеской или с амортизацией на оба колеса. Обычно на горный вел ставят плоские рули, а райдер находится в вертикальном положении для баланса и контроля.' },
-        { name: 'Велосипед Stels', price: '12500', category: 'Спорт и отдых', description: 'Горные велосипеды предназначены для покорения бездорожья и перемещения по грязи, снегу и гравию. Эти байки делают очень крепкими, у них толстые шины и прочные колеса, устойчивые к повреждениям от ударов. Рамы для горных велов производят из алюминия, стали, титана и карбона, их ресурс прочности рассчитан на большие нагрузки. Система амортизации на таких байках позволяет колесам поглощать вибрации и удары на неровной дороге. Существуют горные велосипеды с передней подвеской или с амортизацией на оба колеса. Обычно на горный вел ставят плоские рули, а райдер находится в вертикальном положении для баланса и контроля.' },
-        { name: 'Велосипед Stels Navigator 480', price: '18000', category: 'Спорт и отдых', description: 'Горные велосипеды предназначены для покорения бездорожья и перемещения по грязи, снегу и гравию. Эти байки делают очень крепкими, у них толстые шины и прочные колеса, устойчивые к повреждениям от ударов. Рамы для горных велов производят из алюминия, стали, титана и карбона, их ресурс прочности рассчитан на большие нагрузки. Система амортизации на таких байках позволяет колесам поглощать вибрации и удары на неровной дороге. Существуют горные велосипеды с передней подвеской или с амортизацией на оба колеса. Обычно на горный вел ставят плоские рули, а райдер находится в вертикальном положении для баланса и контроля.' },
-        { name: 'Велосипед', price: '10000', category: 'Спорт и отдых', description: 'Горные велосипеды предназначены для покорения бездорожья и перемещения по грязи, снегу и гравию. Эти байки делают очень крепкими, у них толстые шины и прочные колеса, устойчивые к повреждениям от ударов. Рамы для горных велов производят из алюминия, стали, титана и карбона, их ресурс прочности рассчитан на большие нагрузки. Система амортизации на таких байках позволяет колесам поглощать вибрации и удары на неровной дороге. Существуют горные велосипеды с передней подвеской или с амортизацией на оба колеса. Обычно на горный вел ставят плоские рули, а райдер находится в вертикальном положении для баланса и контроля.' },
-        { name: 'Велосипед Stels', price: '15000', category: 'Спорт и отдых', description: 'Горные велосипеды предназначены для покорения бездорожья и перемещения по грязи, снегу и гравию. Эти байки делают очень крепкими, у них толстые шины и прочные колеса, устойчивые к повреждениям от ударов. Рамы для горных велов производят из алюминия, стали, титана и карбона, их ресурс прочности рассчитан на большие нагрузки. Система амортизации на таких байках позволяет колесам поглощать вибрации и удары на неровной дороге. Существуют горные велосипеды с передней подвеской или с амортизацией на оба колеса. Обычно на горный вел ставят плоские рули, а райдер находится в вертикальном положении для баланса и контроля.' },
-    ])
+    const [categories, setCategories] = useState(productCategories || [])
+    const [products, setProducts] = useState(productsdata || [])
+    const [filtered, setFiltered] = useState([])
+
+    useEffect(() => {
+        filterProducts();
+    }, [products]);
 
     const handleQueryChange = (name) => { setFilters(prev => ({ ...prev, name: name || '' })) };
 
     const handleCategoryChange = (category) => { setFilters(prev => ({ ...prev, category: category?.value || '' })) };
 
-    const handlePriceChange = (priceStart, priceEnd) => {
-        const price = priceStart === '' ? [filters.price[0], Number(priceEnd)] : [Number(priceStart), filters.price[1]]
-        setFilters(prev => ({ ...prev, price }));
+    const handlePriceChange = (value, position) => {
+        const numValue = value === '' ? undefined : Number(value);
+
+        setFilters(prev => {
+            const currentPrice = prev.price || [undefined, undefined]
+            let newPrice = []
+
+            if (position === 'start') { newPrice = [numValue, currentPrice[1]] 
+            } else { newPrice = [currentPrice[0], numValue] }
+
+            if (newPrice[0] === undefined && newPrice[1] === undefined) { return { ...prev, price: [] } }
+
+            return { ...prev, price: newPrice }
+        });
     };
 
-    const filteredCards = useMemo(() => {
-        if (!products) return []
-        return products.filter(() =>
-            (!filters.name || product.name.toLowerCase().includes(filters.name.toLowerCase())) &&
-            (!filters.category || product.category === filters.category) &&
-            (!filters.price.length || (product.price >= filters.price[0] && product.price <= filters.price[1]))
-        )
-    }, [products, filters])
+    const filterProducts = () => {
+        if (!products) return [];
+
+        setFiltered(
+            products.filter((product) =>
+                (!filters.name || product.name.toLowerCase().includes(filters.name.toLowerCase())) &&
+                (!filters.category || product.category === filters.category) &&
+                (!filters.price.length || (product.price >= filters.price[0] && product.price <= filters.price[1]))
+            ))
+    }
 
     const changeModalVisibility = () => {
         setModalVisible(modalVisible === true ? false : true)
@@ -45,10 +62,46 @@ const MainPage = () => {
     return (
         <Layout>
             <div className={`container ${styles.mainContainer}`}>
-                <div></div>
+                <SearchComponent
+                    onChange={(e) => handleQueryChange(e.target.value)}
+                    btnOnClick={filterProducts}
+                >
+                </SearchComponent>
+                <div className={styles.filters}>
+                    <div className={styles.selectFilter}>
+                        <label for='category'>Категория:</label>
+                        <Select
+                            name='category'
+                            options={categories}
+                            styles={selectStyles}
+                            onChange={handleCategoryChange}
+                            placeholder=''
+                        ></Select>
+                    </div>
+                    <div className={styles.inputFilter}>
+                        <label for='priceStart'>Цена от:</label>
+                        <input
+                            name='priceStart'
+                            type='number'
+
+                            onChange={(e) => handlePriceChange(e.target.value, 'start')}
+                            placeholder=''
+                        ></input>
+                    </div>
+                    <div className={styles.inputFilter}>
+                        <label for='priceEnd'>до:</label>
+                        <input
+                            name='priceEnd'
+                            type='number'
+
+                            onChange={(e) => handlePriceChange(e.target.value, 'end')}
+                            placeholder=''>
+                        </input>
+                    </div>
+                </div>
                 <div className={styles.productsList}>
                     {
-                        products?.map((product, index) => (
+                        filtered?.map((product, index) => (
                             <ProductCard
                                 key={index}
                                 name={product.name}

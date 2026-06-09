@@ -11,3 +11,81 @@
     flex-direction: column;
     gap: var(--gap-big);
 }
+
+.orderCards {
+    display: flex;
+    flex-direction: column; 
+    gap: var(--gap-big);
+}
+
+.orderForm {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 580px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-big);
+    padding: 20px;
+    border-radius: var(--br-radius-primary);
+    background-color: var(--bg-primary);
+    box-shadow: var(--shadow);
+}
+
+.formFields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-big);
+}
+
+.formField {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-small);
+}
+
+.formField input {
+    max-width: 400px;
+    padding: 10px 25px;
+    border: none;
+    outline: none;
+    border-radius: var(--br-radius-primary);
+    font-size: 18px;
+    box-shadow: var(--shadow);
+}
+
+.formField label {
+    font-weight: 700;
+    font-size: var(--fs-medium);
+}
+
+.orderInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-big);
+}
+
+.orderSum {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-small);
+    padding: 10px 25px;
+}
+
+.orderSum span {
+    font-weight: 700;
+    font-size: var(--fs-medium);
+}
+
+.orderSum p {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--fc-accent);
+}
+
+.orderBtn {
+    padding: 10px 64px;
+    font-size: 22px;
+    font-weight: 700;
+}

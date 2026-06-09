@@ -15,10 +15,10 @@ const Header = () => {
                         <h2 className={styles.logoText}>WOW_Market</h2>
                     </div>
                     <nav className={styles.navItems}>
-                        <div className={styles.navItem}>
+                        <Link to='/' className={styles.navItem}>
                             <ShopBagImg />
-                            <h3>Заказы</h3>
-                        </div>
+                            <h3>Товары</h3>
+                        </Link>
                         <Link to='/basket' className={styles.navItem}>
                             <BasketImg />
                             <h3>Корзина</h3>

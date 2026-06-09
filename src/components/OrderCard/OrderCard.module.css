@@ -15,7 +15,7 @@
 .orderCard img {
     width: 100%;
     max-width: 200px;
-    border: 1px solid var(--bg-accent-lite);
+    /* border: 1px solid var(--bg-accent-lite); */
     border-radius: var(--br-radius-primary);
 }
 

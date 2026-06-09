@@ -1,7 +1,7 @@
 const selectStyles = {
     control: (provided) => ({
         ...provided,
-        width: "350px",
+        width: "320px",
         fontSize: "18px",
         borderRadius: "8px",
         border: "none",
@@ -12,7 +12,7 @@ const selectStyles = {
 
     menu: (provided) => ({
         ...provided,
-        width: "400px",
+        width: "320px",
         borderRadius: "8px",
         boxShadow: "var(--shadow)",
     }),

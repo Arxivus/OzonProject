@@ -71,7 +71,7 @@ const MainPage = () => {
                     <div className={styles.selectFilter}>
                         <label for='category'>Категория:</label>
                         <Select
-                            name='category'
+                            id='category'
                             options={categories}
                             styles={selectStyles}
                             onChange={handleCategoryChange}
@@ -81,7 +81,7 @@ const MainPage = () => {
                     <div className={styles.inputFilter}>
                         <label for='priceStart'>Цена от:</label>
                         <input
-                            name='priceStart'
+                            id='priceStart'
                             type='number'
 
                             onChange={(e) => handlePriceChange(e.target.value, 'start')}
@@ -91,7 +91,7 @@ const MainPage = () => {
                     <div className={styles.inputFilter}>
                         <label for='priceEnd'>до:</label>
                         <input
-                            name='priceEnd'
+                            id='priceEnd'
                             type='number'
 
                             onChange={(e) => handlePriceChange(e.target.value, 'end')}

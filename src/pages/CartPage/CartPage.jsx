@@ -54,15 +54,15 @@ const CartPage = ({ }) => {
                     <div className={styles.formFields}>
                         <div className={styles.formField}>
                             <label for='city'>Город:</label>
-                            <input type="text" name='sity' placeholder='Екатеринбург' />
+                            <input type="text" id='sity' placeholder='Екатеринбург' />
                         </div>
                         <div className={styles.formField}>
                             <label for='city'>Адрес пункта выдачи:</label>
-                            <input type="text" name='sity' placeholder='ул. Космонавтов, д. 8' />
+                            <input type="text" id='location' placeholder='ул. Космонавтов, д. 8' />
                         </div>
                         <div className={styles.formField}>
                             <label for='email'>Email:</label>
-                            <input type="email" name='email' placeholder='yourmail@mail.ru' />
+                            <input type="email" id='email' placeholder='yourmail@mail.ru' />
                         </div>
                     </div>
                     <div className={styles.orderInfo}>

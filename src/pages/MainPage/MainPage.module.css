@@ -13,12 +13,14 @@
 
 .filters {
     display: flex;
+    flex-wrap: wrap;
     justify-content: end;
     gap: var(--gap-big);
 }
 
 .selectFilter {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: var(--gap-small);
 }

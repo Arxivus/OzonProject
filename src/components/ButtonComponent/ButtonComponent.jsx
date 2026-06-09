@@ -11,7 +11,7 @@ const ButtonComponent = ({
 }) => {
     return (
         <button
-            className={`${className} ${styles.wrapper}`}
+            className={`${styles.wrapper} ${className}`}
             style={{
                 width: isWidthGriddy ? "100%" : "",
             }}

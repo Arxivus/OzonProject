@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import MainPage from './pages/MainPage/MainPage'
-import BasketPage from './pages/BasketPage/BasketPage'
+import CartPage from './pages/CartPage/CartPage'
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path='/' element={<MainPage />}>
         </Route>
-        <Route path='/basket' element={<BasketPage />}>
+        <Route path='/cart' element={<CartPage />}>
         </Route>
       </Routes>
     </BrowserRouter>

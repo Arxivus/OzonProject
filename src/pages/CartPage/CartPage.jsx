@@ -1,22 +1,38 @@
-import styles from './BasketPage.module.css'
+import styles from './CartPage.module.css'
 import Layout from '../Layout'
 import OrderCard from '../../components/OrderCard/OrderCard'
 import { useEffect, useState } from 'react'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
 
-const BasketPage = ({ }) => {
+const CartPage = ({ }) => {
 
-    const [ orderedProducts, setOrderedProducts ] = useState([
-        { name: 'Велосипед Stels', price: '12500', category: 'Спорт и отдых' },
-        { name: 'Велосипед', price: '10000', category: 'Спорт и отдых' },
-    ])
-    const [ orderSum, setOrderSum ] = useState(0)
+    const [orderedProducts, setOrderedProducts] = useState([])
+    const [orderSum, setOrderSum] = useState(0)
 
     useEffect(() => {
+        const cartData = sessionStorage.getItem('cart');
 
-        const totalPrice = orderedProducts?.reduce((sum, product) => sum + Number(product.price), 0);
+        if (!cartData) return
+
+        let cartProducts = JSON.parse(cartData)
+        setOrderedProducts(cartProducts)
+        console.log(cartProducts);
+    }, [])
+
+
+    useEffect(() => {
+        const totalPrice = orderedProducts.reduce((sum, product) => sum + Number(product.price), 0);
         setOrderSum(totalPrice)
+
     }, [orderedProducts])
+
+    const removeFromCart = (productId) => {
+        const updatedCart = orderedProducts.filter(item => item.id !== productId);
+        sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+
+        setOrderedProducts(updatedCart)
+        console.log(`Товар с id ${productId} удалён`);
+    }
 
     return (
         <Layout>
@@ -28,6 +44,7 @@ const BasketPage = ({ }) => {
                             orderedProducts?.map((product, index) => (
                                 <OrderCard
                                     product={product}
+                                    removeFunction={removeFromCart}
                                 ></OrderCard>
                             ))
                         }
@@ -37,15 +54,15 @@ const BasketPage = ({ }) => {
                     <div className={styles.formFields}>
                         <div className={styles.formField}>
                             <label for='city'>Город:</label>
-                            <input type="text" name='sity' placeholder='Екатеринбург'/>
+                            <input type="text" name='sity' placeholder='Екатеринбург' />
                         </div>
                         <div className={styles.formField}>
                             <label for='city'>Адрес пункта выдачи:</label>
-                            <input type="text" name='sity' placeholder='ул. Космонавтов, д. 8'/>
+                            <input type="text" name='sity' placeholder='ул. Космонавтов, д. 8' />
                         </div>
                         <div className={styles.formField}>
                             <label for='email'>Email:</label>
-                            <input type="email" name='email' placeholder='yourmail@mail.ru'/>
+                            <input type="email" name='email' placeholder='yourmail@mail.ru' />
                         </div>
                     </div>
                     <div className={styles.orderInfo}>
@@ -53,11 +70,16 @@ const BasketPage = ({ }) => {
                             <span>Сумма заказа: </span>
                             <p>{orderSum} рублей</p>
                         </div>
-                        <ButtonComponent
-                            className={styles.orderBtn}
-                        >
-                            Заказать
-                        </ButtonComponent>
+                        {
+                            orderSum > 0 ?
+                                <ButtonComponent
+                                    className={styles.orderBtn}
+                                >
+                                    Заказать
+                                </ButtonComponent>
+                                : 
+                                <></>
+                        }
                     </div>
 
                 </form>
@@ -66,4 +88,4 @@ const BasketPage = ({ }) => {
     )
 }
 
-export default BasketPage
+export default CartPage

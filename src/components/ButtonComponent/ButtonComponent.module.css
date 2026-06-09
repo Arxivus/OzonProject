@@ -30,7 +30,8 @@
     stroke: var(--fc-primary);
 }
 
-/* .wrapper:disabled {
+.wrapper:disabled {
+    cursor: default;
     background-color: var(--bg-btn-disabled);
 }
 
@@ -40,7 +41,7 @@
 
 .wrapper:disabled svg path {
     stroke: var(--fc-btn-disabled);
-} */
+}
 
 .textContent {
     text-wrap: nowrap;

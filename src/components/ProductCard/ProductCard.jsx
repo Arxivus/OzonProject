@@ -1,12 +1,23 @@
 import styles from './ProductCard.module.css'
 import ButtonComponent from '../ButtonComponent/ButtonComponent'
 import noImage from '../../assets/images/noimage.png'
+import { useState } from 'react'
 
-const ProductCard = ({ imageUrl, name, price, onClick }) => {
+const ProductCard = ({ product, onClick }) => {
+
+    const [isAdded, setIsAdded] = useState(false)
 
     const handleButtonClick = (e) => {
         e.stopPropagation();
-        console.log('Добавлен в корзину:', name);
+
+        const localCart = sessionStorage.getItem('cart');
+        let cart = localCart ? JSON.parse(localCart) : [];
+
+        cart.push(product);
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+        setIsAdded(true)
+
+        console.log('Товар добавлен в корзину');
     };
 
     return (
@@ -15,23 +26,34 @@ const ProductCard = ({ imageUrl, name, price, onClick }) => {
             className={styles.card}
         >
             <img className={styles.cardImg} src={
-                imageUrl || noImage
+                product.imageUrl || noImage
             } />
             <div className={styles.cardBody}>
                 <div className={styles.cardInfo}>
                     <span className={styles.cardTitle}>
-                        {name}
+                        {product.name}
                     </span>
                     <p className={styles.cardPrice}>
-                        {price}р
+                        {product.price}р
                     </p>
                 </div>
-                <ButtonComponent
-                    className={styles.cardBtn}
-                    onClick={handleButtonClick}
-                >
-                    В корзину
-                </ButtonComponent>
+                {
+                    isAdded ?
+                        <ButtonComponent
+                            disabled={true}
+                            className={styles.cardBtn}
+                            onClick={handleButtonClick}
+                        >
+                            Добавлен
+                        </ButtonComponent>
+                        :
+                        <ButtonComponent
+                            className={styles.cardBtn}
+                            onClick={handleButtonClick}
+                        >
+                            В корзину
+                        </ButtonComponent>
+                }
             </div>
         </div>
     )

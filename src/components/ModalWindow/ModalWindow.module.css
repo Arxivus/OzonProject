@@ -28,7 +28,7 @@
     background-color: var(--bg-primary);
 
     transform: scale(0.9);
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease;
 }
 
 .visible {

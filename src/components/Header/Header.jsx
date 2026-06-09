@@ -19,7 +19,7 @@ const Header = () => {
                             <ShopBagImg />
                             <h3>Товары</h3>
                         </Link>
-                        <Link to='/basket' className={styles.navItem}>
+                        <Link to='/cart' className={styles.navItem}>
                             <BasketImg />
                             <h3>Корзина</h3>
                         </Link>

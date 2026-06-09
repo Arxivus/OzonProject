@@ -104,8 +104,7 @@ const MainPage = () => {
                         filtered?.map((product, index) => (
                             <ProductCard
                                 key={index}
-                                name={product.name}
-                                price={product.price}
+                                product={product}
                                 onClick={() => {
                                     changeModalVisibility()
                                     setProductShown(product)

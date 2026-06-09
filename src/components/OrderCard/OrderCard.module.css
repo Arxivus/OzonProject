@@ -1,11 +1,11 @@
 .orderCard {
     box-sizing: border-box;
-    max-width: 100%;
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--gap-big);
+    flex-direction: column;
+    gap: var(--gap-medium);
     padding: 20px;
     border-radius: var(--br-radius-primary);
     background-color: var(--bg-primary);
@@ -14,15 +14,16 @@
 
 .orderCard img {
     width: 100%;
-    max-width: 200px;
-    /* border: 1px solid var(--bg-accent-lite); */
+    max-height: 200px;
     border-radius: var(--br-radius-primary);
 }
 
 .orderInfo {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: var(--gap-big);
+    justify-content: space-around;
+    gap: var(--gap-medium);
 }
 
 .orderInfoBlock {
@@ -33,8 +34,9 @@
 }
 
 .orderInfoBlock span {
+    text-align: center;
     font-weight: 700;
-    font-size: 18px;
+    font-size: var(--fs-medium);
 }
 
 .orderInfoBlock p {

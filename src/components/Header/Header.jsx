@@ -2,6 +2,7 @@ import styles from './Header.module.css'
 import LogoImg from '../../assets/images/logo-icon.svg?react'
 import ShopBagImg from '../../assets/images/shop-bag.svg?react'
 import BasketImg from '../../assets/images/basket.svg?react'
+import OrdersImg from '../../assets/images/box.svg?react'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
@@ -18,6 +19,10 @@ const Header = () => {
                         <Link to='/' className={styles.navItem}>
                             <ShopBagImg />
                             <h3>Товары</h3>
+                        </Link>
+                        <Link to='/orders' className={styles.navItem}>
+                            <OrdersImg />
+                            <h3>Заказы</h3>
                         </Link>
                         <Link to='/cart' className={styles.navItem}>
                             <BasketImg />

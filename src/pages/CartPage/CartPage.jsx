@@ -2,12 +2,14 @@ import styles from './CartPage.module.css'
 import Layout from '../Layout'
 import OrderCard from '../../components/OrderCard/OrderCard'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
 
 const CartPage = ({ }) => {
 
     const [orderedProducts, setOrderedProducts] = useState([])
     const [orderSum, setOrderSum] = useState(0)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const cartData = sessionStorage.getItem('cart');
@@ -31,7 +33,13 @@ const CartPage = ({ }) => {
         sessionStorage.setItem('cart', JSON.stringify(updatedCart));
 
         setOrderedProducts(updatedCart)
-        console.log(`Товар с id ${productId} удалён`);
+    }
+
+    const handleClickOrder = () => {
+        console.log(`Заказ оформлен: ${orderedProducts}`);
+        sessionStorage.setItem('cart', JSON.stringify([]));
+
+        navigate('/orders')
     }
 
     return (
@@ -41,12 +49,12 @@ const CartPage = ({ }) => {
                     <h2>Корзина</h2>
                     <div className={styles.orderCards}>
                         {
-                            orderedProducts?.map((product, index) => (
+                            orderedProducts.length != 0 ? orderedProducts.map((product, index) => (
                                 <OrderCard
                                     product={product}
                                     removeFunction={removeFromCart}
                                 ></OrderCard>
-                            ))
+                            )) : <div className='noDataText'>Корзина пуста...</div>
                         }
                     </div>
                 </div>
@@ -74,6 +82,7 @@ const CartPage = ({ }) => {
                             orderSum > 0 ?
                                 <ButtonComponent
                                     className={styles.orderBtn}
+                                    onClick={handleClickOrder}
                                 >
                                     Заказать
                                 </ButtonComponent>

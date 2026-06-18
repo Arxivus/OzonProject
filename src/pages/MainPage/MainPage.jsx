@@ -9,6 +9,7 @@ import Select from 'react-select';
 import SingleValue from 'react-select';
 import AboutProductCard from '../../components/AboutProductCard/AboutProductCard'
 import { productsdata, productCategories } from '../../testData'
+import { getCategories, getProducts } from '../../apiRequest'
 
 const MainPage = () => {
 
@@ -16,9 +17,14 @@ const MainPage = () => {
     const [modalVisible, setModalVisible] = useState(false)
     const [filters, setFilters] = useState({ name: '', category: '', price: [] });
 
-    const [categories, setCategories] = useState(productCategories || [])
-    const [products, setProducts] = useState(productsdata || [])
+    const [categories, setCategories] = useState(productCategories)
+    const [products, setProducts] = useState(productsdata)
     const [filtered, setFiltered] = useState([])
+
+    useEffect(() => {
+        /* getProducts().then(data => setProducts(data));
+        getCategories().then(data => setCategories(data)); */
+    }, [])
 
     useEffect(() => {
         filterProducts();
@@ -35,7 +41,8 @@ const MainPage = () => {
             const currentPrice = prev.price || [undefined, undefined]
             let newPrice = []
 
-            if (position === 'start') { newPrice = [numValue, currentPrice[1]] 
+            if (position === 'start') {
+                newPrice = [numValue, currentPrice[1]]
             } else { newPrice = [currentPrice[0], numValue] }
 
             if (newPrice[0] === undefined && newPrice[1] === undefined) { return { ...prev, price: [] } }
@@ -45,7 +52,7 @@ const MainPage = () => {
     };
 
     const filterProducts = () => {
-        if (!products) return [];
+        if (!products) setFiltered([]);
 
         setFiltered(
             products.filter((product) =>
@@ -101,7 +108,7 @@ const MainPage = () => {
                 </div>
                 <div className={styles.productsList}>
                     {
-                        filtered?.map((product, index) => (
+                        filtered.length != 0 ? filtered.map((product, index) => (
                             <ProductCard
                                 key={index}
                                 product={product}
@@ -110,7 +117,7 @@ const MainPage = () => {
                                     setProductShown(product)
                                 }}
                             ></ProductCard>
-                        ))
+                        )) : <div className='noDataText'>Товары не найдены...</div>
                     }
                 </div>
                 {

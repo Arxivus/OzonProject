@@ -12,9 +12,17 @@ const productCategories = [
     { label: 'Настольные и карточные игры', value: 'Настольные и карточные игры' },
     { label: 'Спорт и отдых', value: 'Спорт и отдых' },
     { label: 'Одежда', value: 'Одежда' },
+    { label: 'Смартфоны', value: 'Смартфоны' },
 ]
 
-export { 
+const ordersData = [
+    { id: 'f47ac10b-58', orderSum: 15000, status: 'Собирается' },
+    { id: 'e32dc0wb-14', orderSum: 2500, status: 'В пути' },
+    { id: 't27lc50bm78', orderSum: 3000, status: 'Доставлен' },
+]
+
+export {
     productsdata,
-    productCategories
+    productCategories,
+    ordersData
 }

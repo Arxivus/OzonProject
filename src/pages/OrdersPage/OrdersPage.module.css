@@ -11,14 +11,14 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 96px;
+    gap: var(--gap-big);
     row-gap: var(--gap-big);
 }
 
 .order {
     box-sizing: border-box;
     width: 100%;
-    max-width: 500px;
+    max-width: 530px;
     display: flex;
     flex-direction: column;
     gap: var(--gap-big);
@@ -36,6 +36,11 @@
 }
 
 .orderInfo span {
+    max-width: 100%;
+    display: flex;
+    gap: var(--gap-small);
+    flex-wrap: wrap;
+    align-items: center;
     width: max-content;
     font-size: 18px;
 }

@@ -59,3 +59,11 @@ main {
   min-height: 100vh;
   background-color: var(--bg-secondary);
 }
+
+.noDataText {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: var(--fs-medium);
+  font-weight: 500;
+}

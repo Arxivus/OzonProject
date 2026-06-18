@@ -1,24 +1,24 @@
 import styles from './OrdersPage.module.css'
 import Layout from '../Layout'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { ordersData } from '../../testData'
 
 const OrdersPage = () => {
 
-    const [ orders, setOrders ] = useState([
-        { id: 'f47ac10b-58', orderSum: 15000, status: 'Собиратется' },
-        { id: 'e32dc0wb-14', orderSum: 2500, status: 'В пути' },
-        { id: 't27lc50bm78', orderSum: 3000, status: 'Доставлен' },
-        
-    ])
+    const [orders, setOrders] = useState(ordersData)
+
+    useEffect(() => {
+        /* getOrders().then(data => setOrders(data)) */
+    }, [])
 
     return (
         <Layout>
             <div className={`container ${styles.mainContainer}`}>
-                <h2>Корзина</h2>
+                <h2>Ваши заказы</h2>
                 <div className={styles.ordersList}>
                     {
-                        orders?.map( order => (
-                            <div className={styles.order}>
+                        orders.length != 0 ? orders.map((order, index) => (
+                            <div key={index} className={styles.order}>
                                 <h3>Заказ #{order.id}</h3>
                                 <div className={styles.orderInfo}>
                                     <span>
@@ -29,7 +29,7 @@ const OrdersPage = () => {
                                     </span>
                                 </div>
                             </div>
-                        ))
+                        )) : <div className='noDataText'>У вас нет заказов</div>
                     }
                 </div>
             </div>

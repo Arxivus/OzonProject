@@ -50,8 +50,20 @@ const CartPage = ({ }) => {
         }));
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const form = e.target;
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        
+        handleClickOrder();
+    };
+
+
     const handleClickOrder = (e) => {
-        e.preventDefault()
         const orderData = JSON.stringify(
             {
                 customer: formData,
@@ -84,7 +96,7 @@ const CartPage = ({ }) => {
                         }
                     </div>
                 </div>
-                <form className={styles.orderForm}>
+                <form className={styles.orderForm} onSubmit={handleSubmit}>
                     <div className={styles.formFields}>
                         <div className={styles.formField}>
                             <label for='fullName'>Ваше ФИО:</label>
@@ -135,8 +147,8 @@ const CartPage = ({ }) => {
                         {
                             orderSum > 0 ?
                                 <ButtonComponent
+                                    type="submit"
                                     className={styles.orderBtn}
-                                    onClick={handleClickOrder}
                                 >
                                     Заказать
                                 </ButtonComponent>

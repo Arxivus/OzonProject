@@ -66,6 +66,20 @@ const getOrders = async () => {
     }
 }
 
+const postOrder = async (order) => {
+    try {
+        const request = await axios.post(`http://${ADDRESS}/${API_PATH}/orders`, order);
+        if (request.status === 200) {
+            return true;
+        }
+    }
+
+    catch (error) {
+        console.error('Не удалось создать заказ:', error);
+        return;
+    }
+}
+
 /* const getProductsMock = async (page, pageSize = 20) => {
     const mockItems = Array.from({ length: pageSize }, (_, i) => ({
         id: `mock-${page}-${i}`,
@@ -86,5 +100,6 @@ export {
     getProducts,
     getCategories,
     getOrders,
+    postOrder,
     /* getProductsMock */
 }

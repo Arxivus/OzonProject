@@ -1,14 +1,14 @@
 import styles from './OrdersPage.module.css'
 import Layout from '../Layout'
 import { useEffect, useState } from 'react'
-import { ordersData } from '../../testData'
+import { getOrders } from '../../apiRequest'
 
 const OrdersPage = () => {
 
-    const [orders, setOrders] = useState(ordersData)
+    const [orders, setOrders] = useState([])
 
     useEffect(() => {
-        /* getOrders().then(data => setOrders(data)) */
+        getOrders().then(data => setOrders(data))
     }, [])
 
     return (
@@ -21,9 +21,9 @@ const OrdersPage = () => {
                             <div key={index} className={styles.order}>
                                 <h3>Заказ #{order.id}</h3>
                                 <div className={styles.orderInfo}>
-                                    <span>
+                                    {/* <span>
                                         Сумма заказа: <b>{order.orderSum}</b>
-                                    </span>
+                                    </span> */}
                                     <span>
                                         Статус: <b>{order.status}</b>
                                     </span>

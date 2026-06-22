@@ -4,12 +4,19 @@ import OrderCard from '../../components/OrderCard/OrderCard'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
+import { postOrder } from '../../apiRequest'
 
 const CartPage = ({ }) => {
 
     const [orderedProducts, setOrderedProducts] = useState([])
     const [orderSum, setOrderSum] = useState(0)
     const navigate = useNavigate()
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        phone: '',
+        shippingAddress: ''
+    });
 
     useEffect(() => {
         const cartData = sessionStorage.getItem('cart');
@@ -35,11 +42,30 @@ const CartPage = ({ }) => {
         setOrderedProducts(updatedCart)
     }
 
-    const handleClickOrder = () => {
-        console.log(`Заказ оформлен: ${orderedProducts}`);
-        sessionStorage.setItem('cart', JSON.stringify([]));
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
-        navigate('/orders')
+    const handleClickOrder = (e) => {
+        e.preventDefault()
+        const orderData = JSON.stringify(
+            {
+                customer: formData,
+                items: orderedProducts.map(product => ({ id: product.id, quantity: 1 }))
+            })
+        console.log(orderData);
+        const response = postOrder(orderData)
+
+        if (response) {
+            navigate('/orders')
+            console.log('Заказ создан');
+        }
+
+        
     }
 
     return (
@@ -61,16 +87,44 @@ const CartPage = ({ }) => {
                 <form className={styles.orderForm}>
                     <div className={styles.formFields}>
                         <div className={styles.formField}>
-                            <label for='city'>Город:</label>
-                            <input type="text" id='sity' placeholder='Екатеринбург' />
-                        </div>
-                        <div className={styles.formField}>
-                            <label for='city'>Адрес пункта выдачи:</label>
-                            <input type="text" id='location' placeholder='ул. Космонавтов, д. 8' />
+                            <label for='fullName'>Ваше ФИО:</label>
+                            <input
+                                required
+                                type="text"
+                                name='fullName'
+                                value={formData.name}
+                                onChange={handleChange}
+                                placeholder='ФИО' />
                         </div>
                         <div className={styles.formField}>
                             <label for='email'>Email:</label>
-                            <input type="email" id='email' placeholder='yourmail@mail.ru' />
+                            <input
+                                required
+                                type="email"
+                                name='email'
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder='yourmail@mail.ru' />
+                        </div>
+                        <div className={styles.formField}>
+                            <label for='email'>Телефон:</label>
+                            <input
+                                required
+                                type="tel"
+                                name='phone'
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder="+79008080111" />
+                        </div>
+                        <div className={styles.formField}>
+                            <label for='city'>Адрес доставки:</label>
+                            <input
+                                required
+                                type="text"
+                                name='shippingAddress'
+                                value={formData.shippingAddress}
+                                onChange={handleChange}
+                                placeholder='г. Екатеринбург, ул. Космонавтов, д. 8, кв. 4' />
                         </div>
                     </div>
                     <div className={styles.orderInfo}>
@@ -86,7 +140,7 @@ const CartPage = ({ }) => {
                                 >
                                     Заказать
                                 </ButtonComponent>
-                                : 
+                                :
                                 <></>
                         }
                     </div>

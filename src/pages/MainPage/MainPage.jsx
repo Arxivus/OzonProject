@@ -8,7 +8,6 @@ import { ModalWindow } from '../../components/ModalWindow/ModalWindow'
 import Select from 'react-select';
 import SingleValue from 'react-select';
 import AboutProductCard from '../../components/AboutProductCard/AboutProductCard'
-/* import { productsdata, productCategories } from '../../testData' */
 import { getCategories, getProducts } from '../../apiRequest'
 
 const MainPage = () => {
@@ -172,9 +171,6 @@ const MainPage = () => {
                 <div ref={loaderRef}>
                     {
                         loading && <div className='noDataText'>Загрузка товаров...</div>
-                    }
-                    {
-                        !hasNext && products.length > 0 && <div className='noDataText'>Все товары загружены</div>
                     }
                 </div>
 

@@ -2,6 +2,7 @@ import styles from './OrdersPage.module.css'
 import Layout from '../Layout'
 import { useEffect, useState } from 'react'
 import { getOrders } from '../../apiRequest'
+import { orderStatusTranslations } from '../../constants/variables'
 
 const OrdersPage = () => {
 
@@ -21,11 +22,19 @@ const OrdersPage = () => {
                             <div key={index} className={styles.order}>
                                 <h3>Заказ #{order.id}</h3>
                                 <div className={styles.orderInfo}>
-                                    {/* <span>
-                                        Сумма заказа: <b>{order.orderSum}</b>
-                                    </span> */}
                                     <span>
-                                        Статус: <b>{order.status}</b>
+                                        Сумма заказа: <b>{order.totalAmount}</b>
+                                    </span>
+                                    <div className={styles.orderProducts}>
+                                        <span>Товары:</span>
+                                        {
+                                            order.items?.map(product => (
+                                                <span className={styles.product}>{product.productName}</span>
+                                            ))
+                                        }
+                                    </div>
+                                    <span>
+                                        Статус: <b>{orderStatusTranslations[order.status] || order.status}</b>
                                     </span>
                                 </div>
                             </div>

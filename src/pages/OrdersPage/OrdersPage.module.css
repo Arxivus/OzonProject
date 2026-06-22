@@ -45,8 +45,15 @@
     font-size: 18px;
 }
 
-.orderInfo span:last-child {
-    padding: 8px;
+.orderProducts {
+    display: flex;
+    gap: var(--gap-small);
+    flex-wrap: wrap;
+}
+
+.product {
+    padding: 4px;
     border-radius: var(--br-radius-secondary);
-    border: 1px solid var(--bg-accent-lite);
+    border: 1px 
+    solid var(--bg-accent-lite);
 }

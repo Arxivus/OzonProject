@@ -5,7 +5,7 @@ import { categoryTranslations } from './constants/variables';
 
 const getProducts = async (page, pageSize = 20) => {
     try {
-        const request = await axios.get(`http://${ADDRESS}/${API_PATH}/`, { params: { page, pageSize } });
+        const request = await axios.get(`http://${ADDRESS}:5000/${API_PATH}/products`, { params: { page, pageSize } });
 
         if (request.status === 200 && request.data.items.length > 0) {
             console.log(request.data);
@@ -27,7 +27,7 @@ const getProducts = async (page, pageSize = 20) => {
 
 const getCategories = async () => {
     try {
-        const request = await axios.get(`http://${ADDRESS}/${API_PATH}/categories`);
+        const request = await axios.get(`http://${ADDRESS}:5000/${API_PATH}/products/categories`);
 
         if (request.status === 200 && request.data.length > 0) {
             const data = request.data
@@ -52,10 +52,11 @@ const getCategories = async () => {
 
 const getOrders = async () => {
     try {
-        const request = await axios.get(`http://${ADDRESS}/${API_PATH}/orders`);
+        const request = await axios.get(`http://${ADDRESS}:5010/${API_PATH}/orders`);
 
-        if (request.status === 200 && request.data.length > 0) {
-            return request.data;
+        if (request.status === 200) {
+            console.log(request.data);
+            return request.data.items;
         }
 
         return [];
@@ -68,7 +69,7 @@ const getOrders = async () => {
 
 const postOrder = async (order) => {
     try {
-        const request = await axios.post(`http://${ADDRESS}/${API_PATH}/orders`, order);
+        const request = await axios.post(`http://${ADDRESS}:5010/${API_PATH}/orders`, order);
         if (request.status === 200) {
             return true;
         }

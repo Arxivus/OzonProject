@@ -1,5 +1,5 @@
-const API_PATH = 'api/v1/products'
-const ADDRESS = '161.104.19.132:5000'
+const API_PATH = 'api/v1'
+const ADDRESS = '161.104.19.132'
 
 
 const categoryTranslations = {
@@ -14,8 +14,18 @@ const categoryTranslations = {
     'Other': 'Другое',
 };
 
+const orderStatusTranslations = {
+    'Created': 'Создан',
+    'Paid': 'Оплачен',
+    'Delivered': 'Доставлен',
+    'Shipped ': 'Отправлен',
+    'Received': 'Получен',
+    'Returned': 'Возвращен',
+}
+
 export {
     API_PATH,
     ADDRESS,
     categoryTranslations,
+    orderStatusTranslations,
 } 

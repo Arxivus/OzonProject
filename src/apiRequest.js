@@ -1,30 +1,47 @@
 import { ADDRESS, API_PATH } from './constants/variables'
 import axios from 'axios'
+import { categoryTranslations } from './constants/variables';
 
-const getProducts = async () => {
+
+const getProducts = async (page, pageSize = 20) => {
     try {
-        const request = await axios.get(`http://${ADDRESS}/${API_PATH}`);
+        const request = await axios.get(`http://${ADDRESS}/${API_PATH}/`, { params: { page, pageSize } });
 
-        if (request.status === 200 && request.data.length > 0) {
-            return request.data;
+        if (request.status === 200 && request.data.items.length > 0) {
+            console.log(request.data);
+
+            return {
+                items: request.data.items,
+                totalPages: request.data.totalPages,
+                hasNext: request.data.hasNext
+            };
         }
 
-        return [];
+        return { items: [], totalPages: 0, hasNext: false };
 
     } catch (error) {
         console.error('Ошибка загрузки товаров:', error);
-        return [];
+        return { items: [], totalPages: 0, hasNext: false };
     }
-}
+};
 
 const getCategories = async () => {
     try {
         const request = await axios.get(`http://${ADDRESS}/${API_PATH}/categories`);
 
         if (request.status === 200 && request.data.length > 0) {
-            return request.data;
+            const data = request.data
+
+            const categories = [
+                { label: 'Все категории', value: '' },
+                ...data.map(category => ({
+                    label: categoryTranslations[category] || category,
+                    value: category
+                }))
+            ];
+            return categories;
         }
-        
+
         return [];
 
     } catch (error) {
@@ -40,7 +57,7 @@ const getOrders = async () => {
         if (request.status === 200 && request.data.length > 0) {
             return request.data;
         }
-        
+
         return [];
 
     } catch (error) {
@@ -49,7 +66,25 @@ const getOrders = async () => {
     }
 }
 
+/* const getProductsMock = async (page, pageSize = 20) => {
+    const mockItems = Array.from({ length: pageSize }, (_, i) => ({
+        id: `mock-${page}-${i}`,
+        name: `Товар ${page * pageSize + i + 1}`,
+        price: 99.99 + i,
+        description: 'Тестовый товар',
+        currency: 'USD'
+    }));
+
+    return {
+        items: mockItems,
+        totalPages: 5,
+        hasNext: page < 5
+    };
+}; */
+
 export {
     getProducts,
     getCategories,
+    getOrders,
+    /* getProductsMock */
 }

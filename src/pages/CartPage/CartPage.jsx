@@ -76,7 +76,7 @@ const CartPage = ({ }) => {
                     <div className={styles.orderInfo}>
                         <div className={styles.orderSum}>
                             <span>Сумма заказа: </span>
-                            <p>{orderSum} рублей</p>
+                            <p>{orderSum}</p>
                         </div>
                         {
                             orderSum > 0 ?

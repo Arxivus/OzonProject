@@ -22,7 +22,7 @@ const OrdersPage = () => {
                                 <h3>Заказ #{order.id}</h3>
                                 <div className={styles.orderInfo}>
                                     <span>
-                                        Сумма заказа: <b>{order.orderSum} рублей</b>
+                                        Сумма заказа: <b>{order.orderSum}</b>
                                     </span>
                                     <span>
                                         Статус: <b>{order.status}</b>

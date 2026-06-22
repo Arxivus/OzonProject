@@ -1,24 +1,39 @@
 import styles from './ProductCard.module.css'
 import ButtonComponent from '../ButtonComponent/ButtonComponent'
 import noImage from '../../assets/images/noimage.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const ProductCard = ({ product, onClick }) => {
 
     const [isAdded, setIsAdded] = useState(false)
 
+    useEffect(() => {
+        const localCart = sessionStorage.getItem('cart');
+        let cart = localCart ? JSON.parse(localCart) : [];
+        const existingProduct = cart.find(item => item.id === product.id);
+        if (existingProduct) setIsAdded(true)
+
+    }, [])
+
     const handleButtonClick = (e) => {
         e.stopPropagation();
-
         const localCart = sessionStorage.getItem('cart');
         let cart = localCart ? JSON.parse(localCart) : [];
 
-        cart.push(product);
-        sessionStorage.setItem('cart', JSON.stringify(cart));
-        setIsAdded(true)
+        const existingProduct = cart.find(item => item.id === product.id);
 
-        console.log('Товар добавлен в корзину');
-    };
+        if (!existingProduct) {
+
+            cart.push(product);
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+
+            console.log('Товар добавлен в корзину'); 
+        }
+
+        setIsAdded(true)
+    }
+
+
 
     return (
         <div
@@ -34,26 +49,16 @@ const ProductCard = ({ product, onClick }) => {
                         {product.name}
                     </span>
                     <p className={styles.cardPrice}>
-                        {product.price}р
+                        {product.price} {product.currency}
                     </p>
                 </div>
-                {
-                    isAdded ?
-                        <ButtonComponent
-                            disabled={true}
-                            className={styles.cardBtn}
-                            onClick={handleButtonClick}
-                        >
-                            Добавлен
-                        </ButtonComponent>
-                        :
-                        <ButtonComponent
-                            className={styles.cardBtn}
-                            onClick={handleButtonClick}
-                        >
-                            В корзину
-                        </ButtonComponent>
-                }
+                <ButtonComponent
+                    disabled={isAdded}
+                    className={styles.cardBtn}
+                    onClick={handleButtonClick}
+                >
+                    {isAdded ? 'Добавлен' : 'В корзину'}
+                </ButtonComponent>
             </div>
         </div>
     )

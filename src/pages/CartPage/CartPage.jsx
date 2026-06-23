@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
 import { postOrder } from '../../apiRequest'
+import toast from 'react-hot-toast';
 
 const CartPage = ({ }) => {
 
@@ -30,8 +31,8 @@ const CartPage = ({ }) => {
 
 
     useEffect(() => {
-        const totalPrice = orderedProducts.reduce((sum, product) => sum + Number(product.price), 0);
-        setOrderSum(totalPrice)
+        const totalPrice = orderedProducts.reduce((sum, product) => sum + product.price, 0);
+        setOrderSum(totalPrice.toFixed(2))
 
     }, [orderedProducts])
 
@@ -63,21 +64,24 @@ const CartPage = ({ }) => {
     };
 
 
-    const handleClickOrder = (e) => {
+    const handleClickOrder = async (e) => {
         const orderData = JSON.stringify(
             {
                 customer: formData,
                 items: orderedProducts.map(product => ({ id: product.id, quantity: 1 }))
             })
         console.log(orderData);
-        const response = postOrder(orderData)
+        const response = await postOrder(orderData)
 
         if (response) {
+            sessionStorage.setItem('cart', JSON.stringify([]));
+            toast.success('Заказ оформлен!')
             navigate('/orders')
-            console.log('Заказ создан');
         }
 
-        
+        else {
+            toast.error('Не удалось создать заказ');
+        }
     }
 
     return (

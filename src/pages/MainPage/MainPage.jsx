@@ -9,13 +9,14 @@ import Select from 'react-select';
 import SingleValue from 'react-select';
 import AboutProductCard from '../../components/AboutProductCard/AboutProductCard'
 import { getCategories, getProducts } from '../../apiRequest'
+import toast from 'react-hot-toast';
 
 const MainPage = () => {
 
     const [productShown, setProductShown] = useState()
     const [modalVisible, setModalVisible] = useState(false)
-    const [filters, setFilters] = useState({ name: '', category: '', price: [] });
 
+    const [filters, setFilters] = useState({ name: '', category: '', price: [] });
     const [categories, setCategories] = useState([])
     const [filtered, setFiltered] = useState([])
 
@@ -26,6 +27,31 @@ const MainPage = () => {
     const [loading, setLoading] = useState(false);
 
     const loaderRef = useRef(null);
+
+    // Добавление товаров в локальное хранилище (корзину)
+
+    const [cart, setCart] = useState(() => {
+        const saved = sessionStorage.getItem('cart');
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart]);
+
+    const inCart = (productId) => {
+        return cart.find(item => item.id === productId);
+    };
+
+    const addToCart = (product) => {
+
+        if (!inCart(product.id)) {
+            setCart([...cart, product])
+            toast.success('Товар добавлен в корзину');
+        }
+    }
+
+    // Подгрузка товаров в каталог
 
     const loadMoreProducts = async () => {
         if (loading || !hasNext && page > 1) return;
@@ -40,7 +66,7 @@ const MainPage = () => {
                 setHasNext(data.hasNext);
             }
         } catch (err) {
-            setError('Ошибка загрузки товаров');
+            toast.error('Ошибка загрузки товаров');
 
         } finally {
             setLoading(false);
@@ -64,6 +90,9 @@ const MainPage = () => {
             if (loaderRef.current) { observer.unobserve(loaderRef.current); }
         };
     }, [hasNext, loading]);
+
+
+    // Получение категорий и фильтрация товаров
 
     useEffect(() => {
         getCategories().then(data => setCategories(data))
@@ -163,6 +192,8 @@ const MainPage = () => {
                                     changeModalVisibility()
                                     setProductShown(product)
                                 }}
+                                inCart={inCart(product.id)}
+                                addToCart={addToCart}
                             ></ProductCard>
                         )) : <div className='noDataText'>Товары не найдены...</div>
                     }
@@ -181,6 +212,8 @@ const MainPage = () => {
                     >
                         <AboutProductCard
                             product={productShown}
+                            inCart={inCart(productShown.id)}
+                            addToCart={addToCart}
                         ></AboutProductCard>
                     </ModalWindow>
                 }

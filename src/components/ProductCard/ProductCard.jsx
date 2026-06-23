@@ -2,38 +2,14 @@ import styles from './ProductCard.module.css'
 import ButtonComponent from '../ButtonComponent/ButtonComponent'
 import noImage from '../../assets/images/noimage.png'
 import { useState, useEffect } from 'react'
+import toast from 'react-hot-toast';
 
-const ProductCard = ({ product, onClick }) => {
-
-    const [isAdded, setIsAdded] = useState(false)
-
-    useEffect(() => {
-        const localCart = sessionStorage.getItem('cart');
-        let cart = localCart ? JSON.parse(localCart) : [];
-        const existingProduct = cart.find(item => item.id === product.id);
-        if (existingProduct) setIsAdded(true)
-
-    }, [])
+const ProductCard = ({ product, onClick, inCart, addToCart }) => {
 
     const handleButtonClick = (e) => {
         e.stopPropagation();
-        const localCart = sessionStorage.getItem('cart');
-        let cart = localCart ? JSON.parse(localCart) : [];
-
-        const existingProduct = cart.find(item => item.id === product.id);
-
-        if (!existingProduct) {
-
-            cart.push(product);
-            sessionStorage.setItem('cart', JSON.stringify(cart));
-
-            console.log('Товар добавлен в корзину'); 
-        }
-
-        setIsAdded(true)
+        addToCart(product)
     }
-
-
 
     return (
         <div
@@ -53,11 +29,11 @@ const ProductCard = ({ product, onClick }) => {
                     </p>
                 </div>
                 <ButtonComponent
-                    disabled={isAdded}
+                    disabled={inCart}
                     className={styles.cardBtn}
                     onClick={handleButtonClick}
                 >
-                    {isAdded ? 'Добавлен' : 'В корзину'}
+                    {inCart ? 'Добавлен' : 'В корзину'}
                 </ButtonComponent>
             </div>
         </div>

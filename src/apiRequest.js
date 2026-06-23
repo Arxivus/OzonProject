@@ -69,9 +69,9 @@ const getOrders = async () => {
 
 const postOrder = async (order) => {
     try {
-        const request = await axios.post(`http://${ADDRESS}:5010/${API_PATH}/orders`, order);
-        if (request.status === 200) {
-            return true;
+        const response = await axios.post(`http://${ADDRESS}:5010/${API_PATH}/orders`, order);
+        if (response.status === 200) {
+            return response.data;
         }
     }
 

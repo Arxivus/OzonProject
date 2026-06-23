@@ -53,18 +53,19 @@ const MainPage = () => {
 
     // Подгрузка товаров в каталог
 
-    const loadMoreProducts = async () => {
-        if (loading || !hasNext && page > 1) return;
+    const loadMoreProducts = async (currentPage) => {
+        if (loading || (!hasNext && page > 1)) return;
 
         setLoading(true);
         try {
-            const data = await getProducts(page, 20);
+            const data = await getProducts(currentPage, 20);
 
             if (data.items.length > 0) {
                 setProducts(prev => [...prev, ...data.items]);
                 setTotalPages(data.totalPages);
                 setHasNext(data.hasNext);
             }
+
         } catch (err) {
             toast.error('Ошибка загрузки товаров');
 
@@ -74,32 +75,35 @@ const MainPage = () => {
     };
 
     useEffect(() => {
+        if (!loaderRef.current) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting && hasNext) {
+                if (entries[0].isIntersecting && hasNext && !loading) {
                     setPage(prev => prev + 1);
-                    loadMoreProducts();
                 }
             },
             { threshold: 0.1 }
         );
 
-        if (loaderRef.current) { observer.observe(loaderRef.current); }
+        observer.observe(loaderRef.current);
 
-        return () => {
-            if (loaderRef.current) { observer.unobserve(loaderRef.current); }
-        };
+        return () => observer.disconnect();
     }, [hasNext, loading]);
+
+    useEffect(() => {
+        if (page === 1 && products.length === 0) {
+            loadMoreProducts(1);
+        } else if (page > 1) {
+            loadMoreProducts(page);
+        }
+    }, [page]);
 
 
     // Получение категорий и фильтрация товаров
 
     useEffect(() => {
         getCategories().then(data => setCategories(data))
-
-        if (page === 1 && products.length === 0) {
-            loadMoreProducts();
-        }
     }, []);
 
     useEffect(() => {

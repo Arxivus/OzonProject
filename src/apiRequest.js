@@ -69,8 +69,11 @@ const getOrders = async () => {
 
 const postOrder = async (order) => {
     try {
-        const response = await axios.post(`http://${ADDRESS}:5010/${API_PATH}/orders`, order);
-        if (response.status === 200) {
+        const response = await axios.post(`http://${ADDRESS}:5010/${API_PATH}/orders`,
+            order,
+            { headers: { 'Content-Type': 'application/json', } }
+        );
+        if (response.status === 200 || response.status === 201) {
             return response.data;
         }
     }
@@ -81,26 +84,9 @@ const postOrder = async (order) => {
     }
 }
 
-/* const getProductsMock = async (page, pageSize = 20) => {
-    const mockItems = Array.from({ length: pageSize }, (_, i) => ({
-        id: `mock-${page}-${i}`,
-        name: `Товар ${page * pageSize + i + 1}`,
-        price: 99.99 + i,
-        description: 'Тестовый товар',
-        currency: 'USD'
-    }));
-
-    return {
-        items: mockItems,
-        totalPages: 5,
-        hasNext: page < 5
-    };
-}; */
-
 export {
     getProducts,
     getCategories,
     getOrders,
     postOrder,
-    /* getProductsMock */
 }

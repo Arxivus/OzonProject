@@ -65,11 +65,11 @@ const CartPage = ({ }) => {
 
 
     const handleClickOrder = async (e) => {
-        const orderData = JSON.stringify(
-            {
+        const orderData = {
                 customer: formData,
-                items: orderedProducts.map(product => ({ id: product.id, quantity: 1 }))
-            })
+                items: orderedProducts.map(product => ({ productId: product.id, quantity: 1 })),
+                currency: orderedProducts[0].currency
+            }
         console.log(orderData);
         const response = await postOrder(orderData)
 

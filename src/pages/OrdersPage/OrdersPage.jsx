@@ -23,18 +23,21 @@ const OrdersPage = () => {
                                 <h3>Заказ #{order.id}</h3>
                                 <div className={styles.orderInfo}>
                                     <span>
-                                        Сумма заказа: <b>{order.totalAmount}</b>
+                                        Сумма заказа: <b>{order.totalAmount} {order.currency}</b>
                                     </span>
                                     <div className={styles.orderProducts}>
                                         <span>Товары:</span>
                                         {
-                                            order.items?.map(product => (
-                                                <span className={styles.product}>{product.productName}</span>
+                                            order.items?.map((product, index) => (
+                                                <span key={index} className={styles.product}>{product.productName}</span>
                                             ))
                                         }
                                     </div>
                                     <span>
                                         Статус: <b>{orderStatusTranslations[order.status] || order.status}</b>
+                                    </span>
+                                    <span>
+                                        Дата создания: <b>{new Date(order.createdAt).toLocaleDateString('ru-RU')}</b>
                                     </span>
                                 </div>
                             </div>

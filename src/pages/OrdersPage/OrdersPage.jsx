@@ -1,8 +1,10 @@
 import styles from './OrdersPage.module.css'
 import Layout from '../Layout'
 import { useEffect, useState } from 'react'
-import { getOrders } from '../../apiRequest'
+import { getOrders, cancelOrder } from '../../apiRequest'
 import { orderStatusTranslations } from '../../constants/variables'
+import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
+import toast from 'react-hot-toast';
 
 const OrdersPage = () => {
 
@@ -11,6 +13,23 @@ const OrdersPage = () => {
     useEffect(() => {
         getOrders().then(data => setOrders(data))
     }, [])
+
+    const handleClickCancel = async (orderId) => {
+        
+        const response = await cancelOrder(orderId)
+        if (response) {
+            setOrders(prevOrders =>
+                prevOrders.map(order =>
+                    order.id === orderId
+                        ? { ...order, status: 'Cancelled' }
+                        : order));
+            toast.success('Заказ отменен');
+        }
+
+        else {
+            toast.error('Не удалось отменить заказ');
+        }
+    }
 
     return (
         <Layout>
@@ -39,6 +58,15 @@ const OrdersPage = () => {
                                     <span>
                                         Дата создания: <b>{new Date(order.createdAt).toLocaleDateString('ru-RU')}</b>
                                     </span>
+                                    {
+                                        order.status != 'Cancelled' &&
+                                        <ButtonComponent
+                                            className={styles.cancelBtn}
+                                            onClick={() => handleClickCancel(order.id)}
+                                        >
+                                            Отменить заказ
+                                        </ButtonComponent>
+                                    }
                                 </div>
                             </div>
                         )) : <div className='noDataText'>У вас нет заказов</div>

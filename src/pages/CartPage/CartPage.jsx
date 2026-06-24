@@ -4,12 +4,17 @@ import OrderCard from '../../components/OrderCard/OrderCard'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
-import { postOrder } from '../../apiRequest'
+import { postOrder, payForOrder } from '../../apiRequest'
 import toast from 'react-hot-toast';
+import { ModalWindow } from '../../components/ModalWindow/ModalWindow'
 
 const CartPage = ({ }) => {
 
+    const [modalVisible, setModalVisible] = useState(false)
+
     const [orderedProducts, setOrderedProducts] = useState([])
+    const [currentOrderId, setCurrentOrderId] = useState('')
+
     const [orderSum, setOrderSum] = useState(0)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
@@ -53,35 +58,50 @@ const CartPage = ({ }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         const form = e.target;
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
         }
-        
+
         handleClickOrder();
     };
 
 
     const handleClickOrder = async (e) => {
         const orderData = {
-                customer: formData,
-                items: orderedProducts.map(product => ({ productId: product.id, quantity: 1 })),
-                currency: orderedProducts[0].currency
-            }
+            customer: formData,
+            items: orderedProducts.map(product => ({ productId: product.id, quantity: 1 })),
+            currency: orderedProducts[0].currency
+        }
         console.log(orderData);
         const response = await postOrder(orderData)
 
         if (response) {
-            sessionStorage.setItem('cart', JSON.stringify([]));
-            toast.success('Заказ оформлен!')
-            navigate('/orders')
+            console.log(response, response.id);
+            setCurrentOrderId(response.id)
+            changeModalVisibility()
         }
 
         else {
             toast.error('Не удалось создать заказ');
         }
+    }
+
+    const handlePayClick = async () => {
+        const isPaid = await payForOrder(currentOrderId)
+
+        if (isPaid) {
+            sessionStorage.setItem('cart', JSON.stringify([]));
+            changeModalVisibility()
+            toast.success('Заказ оформлен!')
+            navigate('/orders')
+        }
+    }
+
+    const changeModalVisibility = () => {
+        setModalVisible(modalVisible === true ? false : true)
     }
 
     return (
@@ -163,6 +183,24 @@ const CartPage = ({ }) => {
 
                 </form>
             </div>
+            {
+                modalVisible && <ModalWindow
+                    visible={modalVisible}
+                    changeVisibility={changeModalVisibility}
+                >
+                    <div className={styles.orderPayBlock}>
+                        <span>Введите номер карты:</span>
+                        <input type="text"/>
+                        <ButtonComponent
+                            className={styles.orderBtn}
+                            isWidthGriddy={true}
+                            onClick={handlePayClick}
+                        >
+                            Оплатить
+                        </ButtonComponent>
+                    </div>
+                </ModalWindow>
+            }
         </Layout>
     )
 }

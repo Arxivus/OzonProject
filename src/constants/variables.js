@@ -17,6 +17,7 @@ const categoryTranslations = {
 const orderStatusTranslations = {
     'Created': 'Создан',
     'Paid': 'Оплачен',
+    'Cancelled': 'Отменен',
     'Delivered': 'Доставлен',
     'Shipped ': 'Отправлен',
     'Received': 'Получен',

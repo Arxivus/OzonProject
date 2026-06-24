@@ -16,7 +16,7 @@
 .orderCards {
     width: 100%;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     gap: var(--gap-big);
 }
@@ -93,4 +93,28 @@
     padding: 10px 64px;
     font-size: 22px;
     font-weight: 700;
+}
+
+.orderPayBlock {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-big);
+    align-items: center;
+    padding-top: 30px;
+
+}
+
+.orderPayBlock span {
+    font-weight: 700;
+    font-size: var(--fs-medium);
+}
+
+.orderPayBlock input {
+    max-width: 400px;
+    padding: 10px 25px;
+    border: none;
+    outline: none;
+    border-radius: var(--br-radius-primary);
+    font-size: 18px;
+    box-shadow: var(--shadow);
 }

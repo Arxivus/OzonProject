@@ -5,7 +5,9 @@ import { categoryTranslations } from './constants/variables';
 
 const getProducts = async (page, pageSize = 20) => {
     try {
-        const request = await axios.get(`http://${ADDRESS}:5000/${API_PATH}/products`, { params: { page, pageSize } });
+        const request = await axios.get(`http://${ADDRESS}:5000/${API_PATH}/products`,
+            { params: { page, pageSize } }
+        );
 
         if (request.status === 200 && request.data.items.length > 0) {
             console.log(request.data);
@@ -84,9 +86,45 @@ const postOrder = async (order) => {
     }
 }
 
+const payForOrder = async (orderId) => {
+    try {
+        const response = await axios.post(`http://${ADDRESS}:5010/${API_PATH}/orders/${orderId}/pay`,
+            orderId,
+            { headers: { 'Content-Type': 'application/json' } }
+        );
+        if (response.status === 200 || response.status === 201) {
+            return response.data;
+        }
+    }
+
+    catch (error) {
+        console.error('Оплата не прошла:', error);
+        return;
+    }
+}
+
+const cancelOrder = async (orderId) => {
+    try {
+        const response = await axios.post(`http://${ADDRESS}:5010/${API_PATH}/orders/${orderId}/cancel`,
+            { reason: "some reason" },
+            { headers: { 'Content-Type': 'application/json' } }
+        );
+        if (response.status === 200 || response.status === 201) {
+            return response.data;
+        }
+    }
+
+    catch (error) {
+        console.error('Заказ не отменен:', error);
+        return;
+    }
+}
+
 export {
     getProducts,
     getCategories,
     getOrders,
     postOrder,
+    payForOrder,
+    cancelOrder
 }

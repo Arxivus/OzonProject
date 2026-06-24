@@ -57,3 +57,11 @@
     border: 1px 
     solid var(--bg-accent-lite);
 }
+
+.cancelBtn {
+    width: max-content;
+    padding: 8px 16px;
+    color: var(--fc-primary);
+    background-color: var(--fc-btn-disabled);
+    font-size: var(--fs-regular);
+}
